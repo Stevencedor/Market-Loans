@@ -1,44 +1,67 @@
 <div class="categorias-container">
   <h2>Administración de Categorías</h2>
-  
-  <!-- Formulario para agregar categorías -->
-  <form (ngSubmit)="agregarCategoria()">
+
+  <!-- Mensajes flotantes/temporales -->
+  <div class="message-container-floating">
+    <div class="success-toast" *ngIf="successMessage">
+      {{ successMessage }}
+    </div>
+    <div class="error-toast" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+  </div>
+
+  <!-- Formulario para agregar/editar categorías -->
+  <form (ngSubmit)="onSubmit()" #categoriaForm="ngForm">
+    <h3>{{ modoEdicion ? 'Editar Categoría' : 'Agregar Nueva Categoría' }}</h3>
     <div class="form-group">
       <label for="nombre">Nombre de categoría</label>
       <input 
         id="nombre"
-        [(ngModel)]="nueva.nombre" 
+        [(ngModel)]="categoriaEnFormulario.nombre" 
         name="nombre" 
         required 
         placeholder="Ej. Alimentación, Transporte, Salario"
+        #nombreInput="ngModel"
       />
+      <div *ngIf="nombreInput.invalid && (nombreInput.dirty || nombreInput.touched)" class="field-error">
+        El nombre es obligatorio.
+      </div>
     </div>
     
     <div class="form-group">
       <label for="descripcion">Descripción (opcional)</label>
       <input 
         id="descripcion"
-        [(ngModel)]="nueva.descripcion" 
+        [(ngModel)]="categoriaEnFormulario.descripcion" 
         name="descripcion"
         placeholder="Breve descripción de la categoría"
       />
     </div>
     
-    <button type="submit">Agregar categoría</button>
-    
-    <div class="success" *ngIf="success">✅ {{ success }}</div>
-    <div class="error" *ngIf="error">❌ {{ error }}</div>
+    <div class="form-actions">
+      <button type="submit" [disabled]="categoriaForm.invalid">
+        {{ modoEdicion ? 'Guardar Cambios' : 'Agregar Categoría' }}
+      </button>
+      <button type="button" *ngIf="modoEdicion" (click)="cancelarEdicion()" class="btn-cancel">
+        Cancelar
+      </button>
+    </div>
   </form>
   
+  <hr class="divider">
+
   <div class="section-header">
-    <h3>Categorías existentes</h3>
+    <h3>Categorías Existentes</h3>
+    <button type="button" *ngIf="modoEdicion" (click)="prepararFormularioParaAgregar()" class="btn-add-new">
+      + Agregar Nueva Categoría
+    </button>
   </div>
   
-  <!-- Estado de carga -->
   <div *ngIf="loading" class="loading">
     Cargando categorías...
   </div>
-    <!-- Tabla de categorías -->
+
   <div class="table-responsive" *ngIf="!loading && categorias.length > 0">
     <table>
       <thead>
@@ -48,23 +71,23 @@
           <th>Acciones</th>
         </tr>
       </thead>
-    <tbody>
-      <tr *ngFor="let cat of categorias">
-        <td>
-          <span class="categoria-icon">🏷️</span>
-          {{ cat.nombre }}
-        </td>
-        <td>{{ cat.descripcion || 'Sin descripción' }}</td>
-        <td class="actions">
-          <button class="btn-edit" title="Editar categoría">✏️</button>
-          <button class="btn-delete" title="Eliminar categoría">🗑️</button>
-        </td>      </tr>
-    </tbody>
+      <tbody>
+        <tr *ngFor="let cat of categorias">
+          <td>
+            <span class="categoria-icon">🏷️</span>
+            {{ cat.nombre }}
+          </td>
+          <td>{{ cat.descripcion || 'Sin descripción' }}</td>
+          <td class="actions">
+            <button (click)="iniciarEdicion(cat)" class="btn-edit" title="Editar categoría">✏️ Editar</button>
+            <button (click)="eliminarCategoria(cat.id)" class="btn-delete" title="Eliminar categoría">🗑️ Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
   
-  <!-- Mensaje cuando no hay categorías -->
-  <div *ngIf="!loading && categorias.length === 0" class="info">
+  <div *ngIf="!loading && categorias.length === 0 && !modoEdicion" class="info">
     No hay categorías registradas. 
     <p>Crea una categoría para organizar mejor tus finanzas.</p>
   </div>

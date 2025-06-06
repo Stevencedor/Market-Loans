@@ -32,6 +32,7 @@
 - **Categorización personalizable** de transacciones financieras
 - **Filtrado por fechas** para análisis de periodos específicos
 - **Sistema de autenticación seguro** con JWT
+- **Gestión de perfil de usuario** (ver y editar información, cambiar contraseña)
 - **Interfaz responsiva** adaptada a dispositivos móviles y de escritorio
 
 ## 🏗️ Arquitectura
@@ -73,6 +74,7 @@ FinanzasApp implementa una arquitectura cliente-servidor moderna:
 El diseño de FinanzasApp ha sido desarrollado siguiendo principios modernos de UI/UX, con enfoque en usabilidad, accesibilidad y responsividad para ofrecer una experiencia intuitiva y agradable al usuario en cualquier dispositivo.
 
 ![Dashboard de FinanzasApp](https://via.placeholder.com/800x450?text=Dashboard+FinanzasApp)
+![Página de Perfil de Usuario](https://via.placeholder.com/800x450?text=Perfil+de+Usuario+FinanzasApp)
 ![Responsive Design](https://via.placeholder.com/800x450?text=Diseño+Responsivo+FinanzasApp)
 
 > Nota: Reemplazar las imágenes de marcador de posición anteriores con capturas de pantalla reales de la aplicación para mostrar el diseño implementado.
@@ -255,9 +257,11 @@ La aplicación estará disponible en `http://localhost:4200`.
 
 ### 4. Gestión de Categorías
 
-- Creación de categorías personalizadas
-- Edición y eliminación de categorías
-- Asignación de categorías a movimientos
+- **Creación de nuevas categorías**: Los usuarios pueden definir categorías personalizadas para organizar sus transacciones.
+- **Edición de categorías existentes**: Permite modificar el nombre de las categorías según sea necesario.
+- **Eliminación de categorías**: Los usuarios pueden eliminar categorías que ya no utilicen. Se implementa lógica para prevenir la eliminación de categorías actualmente en uso por movimientos existentes (error 409).
+- **Visualización centralizada**: Interfaz dedicada para listar, crear, editar y eliminar todas las categorías.
+- **Asignación a movimientos**: Las categorías definidas se pueden asignar a cada movimiento (ingreso o gasto) para una mejor clasificación y análisis.
 
 ## 📁 Estructura del proyecto
 

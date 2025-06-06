@@ -12,6 +12,8 @@ $transition-speed:   0.3s;
 
 // ===============================
 
+@use 'sass:color';
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -30,7 +32,7 @@ $transition-speed:   0.3s;
   &.scrolled {
     padding: 0.5rem 2rem;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
-    background: linear-gradient(135deg, darken(#2c6bed, 5%), darken(#6c63ff, 5%));
+    background: linear-gradient(135deg, color.adjust(#2c6bed, $lightness: -5%), color.adjust(#6c63ff, $lightness: -5%));
   }
 
   // ===========================

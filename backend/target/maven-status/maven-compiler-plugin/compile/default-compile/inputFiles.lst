@@ -7,6 +7,10 @@ D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\controller\MovimientoController.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\controller\ReporteController.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\controller\UserController.java
+D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\dto\ErrorResponse.java
+D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\exception\CategoriaEnUsoException.java
+D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\exception\GlobalExceptionHandler.java
+D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\exception\ResourceNotFoundException.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\FinanzasBackendApplication.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\model\Categoria.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\model\Movimiento.java
@@ -15,6 +19,7 @@ D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\repository\CategoriaRepository.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\repository\MovimientoRepository.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\repository\UsuarioRepository.java
+D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\service\CategoriaService.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\service\CustomUserDetailsService.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\service\JwtService.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\service\UsuarioService.java

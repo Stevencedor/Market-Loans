@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 .perfil-container {
   max-width: 800px;
   margin: 2rem auto;
@@ -118,10 +120,14 @@ h3 {
     }
   }
   
+  .success-message {
+    // ...existing code...
+    color: color.adjust(#2ecc71, $lightness: -15%);
+  }
+
   .error-message {
-    color: var(--expense-color);
-    font-size: 0.85rem;
-    margin-top: 0.5rem;
+    // ...existing code...
+    color: color.adjust(#e74c3c, $lightness: -15%);
   }
 }
 
@@ -217,12 +223,12 @@ h3 {
 
 .alert-success {
   background-color: var(--income-light);
-  color: darken(#2ecc71, 15%);
+  color: color.adjust(#2ecc71, $lightness: -15%);
 }
 
 .alert-error {
   background-color: var(--expense-light);
-  color: darken(#e74c3c, 15%);
+  color: color.adjust(#e74c3c, $lightness: -15%);
 }
 
 /* Loading spinner */

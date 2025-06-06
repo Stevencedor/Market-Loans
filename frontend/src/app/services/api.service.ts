@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth.service'; // Importar AuthService
+import { AuthService } from './auth.service';
+import { Categoria } from '../models/categoria.model'; // Importar la interfaz Categoria
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { AuthService } from './auth.service'; // Importar AuthService
 export class ApiService {
   private baseUrl = 'http://localhost:8080/api';
 
-  constructor(private http: HttpClient, private authService: AuthService) {} // Inyectar AuthService
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   login(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/login`, data);
@@ -18,13 +19,15 @@ export class ApiService {
   register(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/register`, data);
   }
-  getMovimientos(token: string): Observable<any> {
+  getMovimientos(tokenAntiguo?: string): Observable<any> { // tokenAntiguo es opcional y no se usará
+    const token = this.authService.getToken();
     return this.http.get(`${this.baseUrl}/movimientos`, {
       headers: new HttpHeaders({ Authorization: `Bearer ${token}` })
     });
   }
   
-  getMovimientosPorFecha(token: string, fechaInicio: string, fechaFin: string): Observable<any> {
+  getMovimientosPorFecha(fechaInicio: string, fechaFin: string, tokenAntiguo?: string): Observable<any> { // tokenAntiguo es opcional y no se usará
+    const token = this.authService.getToken();
     return this.http.get(`${this.baseUrl}/movimientos`, {
       headers: new HttpHeaders({ Authorization: `Bearer ${token}` }),
       params: {
@@ -34,46 +37,64 @@ export class ApiService {
     });
   }
 
-  addMovimiento(movimiento: any, token: string): Observable<any> {
+  addMovimiento(movimiento: any, tokenAntiguo?: string): Observable<any> { // tokenAntiguo es opcional y no se usará
+    const token = this.authService.getToken();
     return this.http.post(`${this.baseUrl}/movimientos`, movimiento, {
       headers: new HttpHeaders({ Authorization: `Bearer ${token}` })
     });
   }
 
-  getCategorias(token: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/categorias`, {
+  getCategorias(tokenAntiguo?: string): Observable<Categoria[]> { // tokenAntiguo es opcional y no se usará, tipar el retorno con Categoria[]
+    const token = this.authService.getToken();
+    return this.http.get<Categoria[]>(`${this.baseUrl}/categorias`, { // Tipar la respuesta del GET
       headers: new HttpHeaders({ Authorization: `Bearer ${token}` })
     });
   }
 
-  addCategoria(categoria: any, token: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/categorias`, categoria, {
+  addCategoria(categoria: Omit<Categoria, 'id'>, tokenAntiguo?: string): Observable<Categoria> { // tokenAntiguo es opcional y no se usará, tipar el parámetro y el retorno
+    const token = this.authService.getToken();
+    return this.http.post<Categoria>(`${this.baseUrl}/categorias`, categoria, { // Tipar la respuesta del POST
       headers: new HttpHeaders({ Authorization: `Bearer ${token}` })
     });
   }
 
-  getBalance(token: string): Observable<any> {
+  updateCategoria(id: number, categoriaData: Partial<Categoria>): Observable<Categoria> {
+    const token = this.authService.getToken();
+    return this.http.put<Categoria>(`${this.baseUrl}/categorias/${id}`, categoriaData, {
+      headers: new HttpHeaders({ Authorization: `Bearer ${token}` })
+    });
+  }
+
+  deleteCategoria(id: number): Observable<void> { // Retorna void o un objeto de respuesta si la API lo envía
+    const token = this.authService.getToken();
+    return this.http.delete<void>(`${this.baseUrl}/categorias/${id}`, {
+      headers: new HttpHeaders({ Authorization: `Bearer ${token}` })
+    });
+  }
+
+  getBalance(tokenAntiguo?: string): Observable<any> { // tokenAntiguo es opcional y no se usará
+    const token = this.authService.getToken();
     return this.http.get(`${this.baseUrl}/reportes/balance`, {
       headers: new HttpHeaders({ Authorization: `Bearer ${token}` })
     });
   }
 
   getUserProfile(): Observable<any> {
-    const token = this.authService.getToken(); // Usar AuthService para obtener el token
+    const token = this.authService.getToken();
     return this.http.get(`${this.baseUrl}/users/profile`, {
       headers: new HttpHeaders({ Authorization: `Bearer ${token}` })
     });
   }
 
   updateUserProfile(profileData: any): Observable<any> {
-    const token = this.authService.getToken(); // Usar AuthService para obtener el token
+    const token = this.authService.getToken();
     return this.http.put(`${this.baseUrl}/users/profile`, profileData, {
       headers: new HttpHeaders({ Authorization: `Bearer ${token}` })
     });
   }
 
   changePassword(passwordData: any): Observable<any> {
-    const token = this.authService.getToken(); // Usar AuthService para obtener el token
+    const token = this.authService.getToken();
     return this.http.post(`${this.baseUrl}/users/change-password`, passwordData, {
       headers: new HttpHeaders({ Authorization: `Bearer ${token}` })
     });

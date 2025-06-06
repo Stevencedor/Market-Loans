@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
-import { CommonModule, NgForOf, NgIf } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgForOf, NgIf],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgIf],
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.scss']
 })

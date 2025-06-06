@@ -1,7 +1,10 @@
+@use 'sass:color';
+
 .categorias-container {
   max-width: 800px;
   margin: 2rem auto;
   padding: 0 1rem;
+  position: relative; // Necesario si los toasts son position: absolute y relativos a este
 }
 
 h2 {
@@ -35,7 +38,7 @@ form {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
   
-  > div {
+  > div.form-group { // Asegurando especificidad para los form-group directos del grid
     display: flex;
     flex-direction: column;
     
@@ -61,11 +64,15 @@ form {
     }
   }
   
-  button[type="submit"] {
-    margin-top: 1.5rem;
-    grid-column: span 2;
-    background: var(--income-color);
-    color: white;
+  .form-actions { // Estilos para el contenedor de botones del formulario
+    grid-column: 1 / -1; // Ocupa todo el ancho del grid
+    display: flex;
+    gap: 10px; 
+    margin-top: 1rem; // Ajuste de margen
+    justify-content: flex-start; // Alineación de botones
+  }
+
+  button[type="submit"], .btn-cancel { // Estilos comunes para botones de acción del formulario
     border: none;
     border-radius: var(--border-radius-sm);
     padding: 0.8rem 1.5rem;
@@ -76,47 +83,61 @@ form {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  button[type="submit"] {
+    background: var(--income-color); // Asumiendo que income-color es para acciones positivas
+    color: white;
     
-    &::before {
-      content: "🏷️";
+    &::before { // Icono para el botón de agregar/guardar
+      content: "🏷️"; // O un ícono más genérico como ✔️
       margin-right: 0.5rem;
       font-size: 1.2rem;
     }
     
     &:hover {
-      background: darken(#2ecc71, 8%);
+      background: color.adjust(#2ecc71, $lightness: -8%); // Ajustar color base si es necesario
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+      box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3); // Ajustar color base si es necesario
     }
     
     &:active {
       transform: translateY(0);
     }
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      &:hover {
+        background: #ccc;
+        transform: none;
+        box-shadow: none;
+      }
+    }
   }
   
-  .success, .error {
-    grid-column: 1 / -1;
-    padding: 0.8rem;
-    border-radius: var(--border-radius-sm);
-    text-align: center;
-    font-weight: 500;
+  .btn-cancel {
+    background-color: #6c757d; 
+    color: white;
+    &:hover {
+        background-color: #5a6268;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+    }
+     &:active {
+      transform: translateY(0);
+    }
   }
-  
-  .success {
-    background-color: rgba(46, 204, 113, 0.1);
-    color: var(--income-color);
-    border-left: 4px solid var(--income-color);
-  }
-  
-  .error {
-    background-color: rgba(231, 76, 60, 0.1);
-    color: var(--expense-color);
-    border-left: 4px solid var(--expense-color);
+
+  .field-error { // Estilo para errores de validación de campos
+    grid-column: 1 / -1; // Ocupa todo el ancho si es un mensaje general del campo
+    color: #dc3545; 
+    font-size: 0.8em;
+    margin-top: 4px;
   }
 }
 
 /* Estado de carga */
-[class*="loading"] {
+.loading { // Nombre de clase más simple
   text-align: center;
   padding: 2rem;
   background: white;
@@ -126,6 +147,7 @@ form {
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  margin-bottom: 2rem;
   
   &::before {
     content: "";
@@ -139,50 +161,105 @@ form {
   }
 }
 
-/* Tabla de categorías */
-.table-responsive {
-  overflow-x: auto;
-  border-radius: var(--border-radius-md);
-  box-shadow: var(--card-shadow);
-  margin-bottom: 2rem;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
+/* Tabla de categorías */
 table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  background: white;
-  min-width: 500px;
+  border-collapse: separate; // Changed from collapse
+  border-spacing: 0; // Added
+  background: white; // Added
+  min-width: 500px; // Added for consistency with other tables
+  margin-bottom: 0; // Added for consistency
   
   th, td {
-    padding: 1rem 1.5rem;
-    text-align: left;
+      padding: 1rem; // Changed from 12px 15px
+      text-align: left;
+      vertical-align: middle;
   }
-  
+
   th {
-    background: #4a6fa5; /* Color sólido atractivo */
-    color: white;
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+      background: #4a6fa5; // Changed to match other tables
+      color: white; // Changed to match other tables
+      font-weight: 600;
+      font-size: 0.9rem; // Added for consistency
+      text-transform: uppercase; // Added for consistency
+      letter-spacing: 0.5px; // Added for consistency
+      // border-top: 1px solid var(--medium-light); // Removed
+      // border-bottom: 1px solid var(--medium-light); // Removed
+      &:first-child {
+        border-top-left-radius: var(--border-radius-md); // Added for rounded corners
+      }
+      &:last-child {
+        border-top-right-radius: var(--border-radius-md); // Added for rounded corners
+      }
+  }
+
+  td {
+    border-top: 1px solid var(--light); // Changed from var(--light) to ensure consistency
   }
   
   tr:nth-child(even) {
-    background-color: rgba(44, 107, 237, 0.03);
+    background-color: rgba(44, 107, 237, 0.03); // Added for row striping
   }
-  
+
   tr:hover {
-    background-color: rgba(44, 107, 237, 0.06);
+    background-color: rgba(44, 107, 237, 0.06); // Changed to match other tables
   }
-  
-  td {
-    border-top: 1px solid var(--light);
-    
-    &:first-child {
-      font-weight: 500;
-    }
+
+  td.actions { // Aplicar directamente a la celda de acciones
+      display: flex;
+      gap: 8px;
+      justify-content: flex-start; // O center, según preferencia
   }
+
+  .btn-edit, .btn-delete {
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      border-radius: var(--border-radius-sm);
+      cursor: pointer;
+      border: 1px solid transparent; // Borde base
+      transition: all 0.2s ease;
+      display: inline-flex; // Para alinear íconos si se añaden dentro
+      align-items: center;
+      gap: 4px; // Espacio para íconos
+  }
+
+  .btn-edit {
+      background-color: var(--secondary-color); // Changed from #ffc107
+      color: var(--white); // Changed from #212529
+      border-color: var(--secondary-color); // Changed from #dda600
+      &:hover {
+          background-color: color.adjust(#6c63ff, $lightness: -10%); // Using hex of var(--secondary-color)
+          transform: translateY(-1px);
+      }
+  }
+
+  .btn-delete {
+      background-color: var(--expense-color); // Changed from #dc3545
+      color: var(--white);
+      border-color: var(--expense-color); // Changed from #b02a37
+      &:hover {
+          background-color: color.adjust(#e74c3c, $lightness: -10%); // Using hex of var(--expense-color)
+          transform: translateY(-1px);
+      }
+  }
+  .categoria-icon {
+      margin-right: 8px;
+      color: var(--primary-color); // Color para el ícono
+  }
+}
+
+.table-responsive {
+  overflow-x: auto;
+  margin-bottom: 2rem;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--card-shadow);
+  // background-color: white; // Removed, as table itself has background
 }
 
 /* Mensaje cuando no hay categorías */
@@ -200,55 +277,137 @@ table {
   gap: 1rem;
   
   &::before {
-    content: "🏷️";
+    content: "🏷️"; // O un ícono de información
     font-size: 3rem;
     margin-bottom: 0.5rem;
   }
 }
 
-/* Acciones para cada categoría */
-.actions {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: flex-end;
+/* Toast messages */
+.message-container-floating {
+    position: fixed; 
+    top: 20px;
+    right: 20px;
+    z-index: 1050; 
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
   
-  button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.4rem;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-    
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.05);
+  .success-toast, .error-toast {
+    padding: 15px 20px;
+    border-radius: var(--border-radius-sm); // Usar variable de borde
+    color: #fff;
+    font-size: 0.95rem;
+    box-shadow: var(--card-shadow-lg, 0 4px 12px rgba(0, 0, 0, 0.15)); // Usar variable de sombra o fallback
+    opacity: 1;
+    transition: opacity 0.5s ease-out, transform 0.3s ease-out;
+    min-width: 280px; 
+    max-width: 400px; 
+    text-align: left;
+    display: flex; // Para alinear ícono y texto
+    align-items: center;
+
+    &::before { // Para el ícono ✅ o ❌
+      font-size: 1.3rem;
+      margin-right: 10px;
     }
-    
-    &.btn-edit:hover {
-      color: var(--primary-color);
+  }
+  
+  .success-toast {
+    background-color: var(--success-bg, #28a745); 
+    border-left: 5px solid var(--success-border, #1e7e34);
+    &::before {
+      content: "✅";
     }
-    
-    &.btn-delete:hover {
-      color: var(--expense-color);
+  }
+  
+  .error-toast {
+    background-color: var(--error-bg, #dc3545); 
+    border-left: 5px solid var(--error-border, #b02a37);
+     &::before {
+      content: "❌";
     }
+  }
+  
+.divider {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border: 0;
+  border-top: 1px solid #eee;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px; // Aumentar margen inferior
+
+  h3 {
+    color: var(--dark);
+    font-size: 1.5rem; // Ajustar tamaño
+    margin: 0; // Quitar margen por defecto de h3
   }
 }
 
-/* Responsive */
+.btn-add-new {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.6rem 1rem; // Ajustar padding
+  border-radius: var(--border-radius-sm);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500; // Ajustar peso
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+      filter: brightness(90%); // Usar filter para variables CSS
+      box-shadow: 0 2px 8px rgba(44, 107, 237, 0.2);
+  }
+}
+
+/* Media Queries */
 @media (max-width: 768px) {
+  .categorias-container {
+    margin: 1rem auto;
+    padding: 0 0.5rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
   form {
     grid-template-columns: 1fr;
     padding: 1.5rem;
     
-    button[type="submit"] {
-      grid-column: 1;
+    .form-actions {
+      grid-column: 1; // Asegurar que ocupe una columna en layout de una
     }
   }
   
   table {
     th, td {
-      padding: 0.8rem;
+      padding: 8px 10px; // Reducir padding en móvil
     }
+    td.actions {
+      flex-direction: column; // Apilar botones en móvil si es necesario
+      align-items: flex-start; // Alinear a la izquierda
+      gap: 5px;
+      .btn-edit, .btn-delete {
+        width: 100%; // Botones ocupan todo el ancho disponible en la celda
+        justify-content: center;
+      }
+    }
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
 }
 
@@ -259,5 +418,22 @@ table {
   
   form {
     padding: 1.2rem;
+    gap: 1rem;
+    .form-actions {
+      flex-direction: column; // Apilar botones del formulario
+      button[type="submit"], .btn-cancel {
+        width: 100%;
+      }
+    }
+  }
+
+  .message-container-floating {
+    top: 10px;
+    right: 10px;
+    left: 10px; // Ocupar ancho en móviles pequeños
+    .success-toast, .error-toast {
+      min-width: auto; // Permitir que se encoja
+      font-size: 0.9rem;
+    }
   }
 }
