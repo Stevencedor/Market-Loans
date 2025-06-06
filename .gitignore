@@ -43,3 +43,8 @@ backend/src/main/resources/application.properties
 
 # Otros
 *.iml
+
+# Ambiente de desarrollo
+.env
+# Ambiente de producción
+.env.production
