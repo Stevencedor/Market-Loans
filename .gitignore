@@ -1,0 +1,45 @@
+# Node.js / Angular
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/.env
+frontend/.env.*
+
+# IDEs y editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs
+*.log
+
+# Spring Boot / Java / Maven
+backend/target/
+backend/.classpath
+backend/.project
+backend/.settings/
+backend/.idea/
+backend/.vscode/
+backend/.env
+backend/.env.*
+
+# Archivos temporales
+*.tmp
+*.bak
+*.old
+*.orig
+
+# Archivos de configuración sensibles
+backend/src/main/resources/application.properties
+
+# Otros
+*.iml
