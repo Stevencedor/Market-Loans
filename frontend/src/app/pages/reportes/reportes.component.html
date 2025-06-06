@@ -1,0 +1,23 @@
+<div class="reportes-container">
+  <h2>Reporte de Balance</h2>
+  <div *ngIf="loading">Cargando reporte...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div *ngIf="balance">
+    <div class="balance-card">
+      <div>
+        <span>Total Ingresos:</span>
+        <strong class="ingreso">{{ balance.totalIngresos | currency:'COP':'symbol':'1.0-0' }}</strong>
+      </div>
+      <div>
+        <span>Total Gastos:</span>
+        <strong class="gasto">{{ balance.totalGastos | currency:'COP':'symbol':'1.0-0' }}</strong>
+      </div>
+      <div>
+        <span>Balance:</span>
+        <strong [ngClass]="{'positivo': balance.balance >= 0, 'negativo': balance.balance < 0}">
+          {{ balance.balance | currency:'COP':'symbol':'1.0-0' }}
+        </strong>
+      </div>
+    </div>
+  </div>
+</div>

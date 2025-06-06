@@ -1,0 +1,147 @@
+// ===============================
+// Variables de color y espacios
+$navbar-bg:          #1976d2;
+$navbar-text:        #fff;
+$navbar-hover:       #125ea2;
+$logout-color:       #ffd600;
+
+$max-height-mobile:  0;     // para animar cierre de menú
+$max-height-open:    500px; // valor grande para animar apertura
+
+$transition-speed:   0.3s;
+
+// ===============================
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;          // ↣ Importante para centrar verticalmente
+  background:      $navbar-bg;
+  color:           $navbar-text;
+  padding:         0.7rem 2rem;
+  border-radius:   0 0 12px 12px;
+  box-shadow:      0 2px 8px rgba(0,0,0,0.08);
+
+  // ===========================
+  // Marca (logo/texto) + botón hamburguesa
+  .navbar-brand {
+    display:         flex;
+    align-items:     center;     // ↣ Centra verticalmente el contenido
+    justify-content: flex-start; // ocupa solo el espacio del contenido
+
+    .brand-link {
+      color:         $navbar-text;
+      font-size:     1.5rem;
+      font-weight:   bold;
+      text-decoration: none;
+      line-height:   1;           // ↣ Evita espacios extra en vertical
+    }
+
+    // Botón hamburguesa (solo se muestra en móvil)
+    .navbar-toggle {
+      display:       none;      // aparecerá en @media
+      background:    transparent;
+      border:        none;
+      cursor:        pointer;
+      padding:       0.3rem;
+      margin-left:   1rem;
+
+      // Barras horizontales
+      .bar {
+        display:        block;
+        width:          25px;
+        height:         3px;
+        margin:         4px 0;
+        background-color: $navbar-text;
+        border-radius:  2px;
+        transition:     background-color 0.2s;
+      }
+
+      &:hover .bar {
+        background-color: lighten($navbar-text, 20%);
+      }
+
+      &:focus {
+        outline:        none;
+      }
+    }
+  }
+
+  // ===========================
+  // Lista de enlaces
+  .navbar-links {
+    list-style:      none;
+    display:         flex;
+    gap:             1.2rem;
+    margin:          0;
+    padding:         0;
+    align-items:     center;     // ↣ Centra verticalmente cada <li>
+
+    li {
+      a {
+        color:            $navbar-text;
+        text-decoration:  none;
+        font-weight:      500;
+        padding:          0.4rem 0.8rem;
+        border-radius:    4px;
+        transition:       background 0.2s, color 0.2s;
+        line-height:      1;     // ↣ Asegura que el texto esté centrado
+
+        &.active,
+        &:hover {
+          background:     $navbar-hover;
+        }
+      }
+
+      .logout {
+        color:       $logout-color;
+        font-weight: bold;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  // ===========================
+  // Punto de quiebre para pantallas ≤ 600px
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items:    flex-start;   // En mobile, primero brand, luego links
+    padding:        1rem;
+
+    .navbar-brand {
+      width:       100%;
+      justify-content: space-between;
+
+      // Mostrar botón hamburguesa
+      .navbar-toggle {
+        display:         block;
+      }
+    }
+
+    // Menú colapsado por defecto
+    .navbar-links {
+      flex-direction:       column;
+      width:                100%;
+      overflow:             hidden;
+      max-height:           $max-height-mobile;
+      transition:           max-height $transition-speed ease-in-out;
+
+      &.open {
+        max-height:         $max-height-open;
+      }
+
+      li {
+        width:              100%;
+
+        a {
+          display:          block;
+          width:            100%;
+          padding:          0.6rem 1rem;
+        }
+      }
+    }
+  }
+}

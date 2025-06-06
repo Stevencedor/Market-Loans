@@ -1,0 +1,35 @@
+<nav class="navbar">
+  <div class="navbar-brand">
+    <a routerLink="/dashboard" class="brand-link">FinanzasApp</a>
+
+    <!-- Botón hamburguesa: solo visible en pantallas ≤ 600px -->
+    <button 
+      class="navbar-toggle" 
+      (click)="toggleMenu()" 
+      aria-label="Menú de navegación"
+      [attr.aria-expanded]="menuOpen"
+    >
+      <!-- Tres barras horizontales -->
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </div>
+
+  <!--
+    En pantallas grandes el UL siempre está visible. 
+    En pantallas pequeñas, solo se muestra si menuOpen === true.
+  -->
+  <ul class="navbar-links" [class.open]="menuOpen">
+    <li><a routerLink="/dashboard" routerLinkActive="active" (click)="menuOpen = false">Dashboard</a></li>
+    <li><a routerLink="/movimientos" routerLinkActive="active" (click)="menuOpen = false">Movimientos</a></li>
+    <li><a routerLink="/categorias" routerLinkActive="active" (click)="menuOpen = false">Categorías</a></li>
+    <li><a routerLink="/reportes" routerLinkActive="active" (click)="menuOpen = false">Reportes</a></li>
+    <li *ngIf="auth.isLoggedIn()">
+      <a (click)="logout(); menuOpen = false" class="logout">Cerrar sesión</a>
+    </li>
+    <li *ngIf="!auth.isLoggedIn()">
+      <a routerLink="/login" (click)="menuOpen = false">Iniciar sesión</a>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,32 @@
+<div class="categorias-container">
+  <h2>Categorías</h2>
+  <form (ngSubmit)="agregarCategoria()">
+    <div>
+      <label>Nombre</label>
+      <input [(ngModel)]="nueva.nombre" name="nombre" required />
+    </div>
+    <div>
+      <label>Descripción</label>
+      <input [(ngModel)]="nueva.descripcion" name="descripcion" />
+    </div>
+    <button type="submit">Agregar</button>
+    <div class="success" *ngIf="success">{{ success }}</div>
+    <div class="error" *ngIf="error">{{ error }}</div>
+  </form>
+  <div *ngIf="loading">Cargando categorías...</div>
+  <table *ngIf="!loading && categorias.length > 0">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cat of categorias">
+        <td>{{ cat.nombre }}</td>
+        <td>{{ cat.descripcion }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!loading && categorias.length === 0" class="info">No hay categorías registradas.</div>
+</div>
