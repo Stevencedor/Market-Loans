@@ -17,10 +17,19 @@ export class ApiService {
   register(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/register`, data);
   }
-
   getMovimientos(token: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/movimientos`, {
       headers: new HttpHeaders({ Authorization: `Bearer ${token}` })
+    });
+  }
+  
+  getMovimientosPorFecha(token: string, fechaInicio: string, fechaFin: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/movimientos`, {
+      headers: new HttpHeaders({ Authorization: `Bearer ${token}` }),
+      params: {
+        fechaInicio: fechaInicio,
+        fechaFin: fechaFin
+      }
     });
   }
 

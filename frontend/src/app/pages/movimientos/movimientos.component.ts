@@ -3,12 +3,11 @@ import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-movimientos',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgForOf, NgIf, NavbarComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgForOf, NgIf],
   templateUrl: './movimientos.component.html',
   styleUrls: ['./movimientos.component.scss']
 })

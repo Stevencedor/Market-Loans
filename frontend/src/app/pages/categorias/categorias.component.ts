@@ -3,12 +3,11 @@ import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NavbarComponent } from "../../components/navbar/navbar.component";
 
 @Component({
   selector: 'app-categorias',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgForOf, NgIf, NavbarComponent],
+  imports: [CommonModule, FormsModule, NgForOf, NgIf],
   templateUrl: './categorias.component.html',
   styleUrls: ['./categorias.component.scss']
 })
