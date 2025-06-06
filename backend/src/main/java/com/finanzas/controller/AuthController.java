@@ -33,6 +33,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
+    @SuppressWarnings("unused")
     public ResponseEntity<?> login(@RequestBody Map<String, String> loginData) {
         try {
             Authentication authentication = authenticationManager.authenticate(
