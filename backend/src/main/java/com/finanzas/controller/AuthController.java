@@ -1,8 +1,6 @@
 package com.finanzas.controller;
 
-import com.finanzas.model.Usuario;
 import com.finanzas.service.JwtService;
-import com.finanzas.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,16 +19,7 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private UsuarioService usuarioService;
-
-    @Autowired
     private JwtService jwtService;
-
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody Usuario usuario) {
-        Usuario nuevoUsuario = usuarioService.registrarUsuario(usuario);
-        return ResponseEntity.ok(nuevoUsuario);
-    }
 
     @PostMapping("/login")
     @SuppressWarnings("unused")

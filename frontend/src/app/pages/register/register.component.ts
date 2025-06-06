@@ -4,13 +4,13 @@ import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule, NgIf } from '@angular/common';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
+//import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, NgIf, NavbarComponent, RouterModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, NgIf, /*NavbarComponent,*/ RouterModule],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })

@@ -1,10 +1,12 @@
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\config\CorsConfig.java
+D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\config\JwtRequestFilter.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\config\SecurityConfig.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\controller\AuthController.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\controller\CategoriaController.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\controller\HealthController.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\controller\MovimientoController.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\controller\ReporteController.java
+D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\controller\UserController.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\FinanzasBackendApplication.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\model\Categoria.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\model\Movimiento.java
