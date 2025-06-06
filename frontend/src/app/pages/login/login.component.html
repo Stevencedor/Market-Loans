@@ -1,26 +1,58 @@
-<app-navbar></app-navbar>
 <div class="login-container">
+  <div class="login-background-shapes"></div>
+  
   <h2>Iniciar Sesión</h2>
+  
   <form [formGroup]="loginForm" (ngSubmit)="login()">
-    <div>
-      <label for="username">Usuario</label>
-      <input id="username" formControlName="username" required />
+    <div class="form-group">
+      <label for="username">
+        <span class="icon">👤</span> Usuario
+      </label>
+      <input 
+        id="username" 
+        formControlName="username" 
+        required 
+        placeholder="Ingresa tu nombre de usuario"
+        autocomplete="username"
+      />
       <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" class="error">
         El usuario es obligatorio.
       </div>
     </div>
-    <div>
-      <label for="password">Contraseña</label>      
-      <input id="password" type="password" formControlName="password" required />
+    
+    <div class="form-group">
+      <label for="password">
+        <span class="icon">🔒</span> Contraseña
+      </label>        <div class="password-input-container">
+        <input 
+          id="password" 
+          [type]="mostrarPassword ? 'text' : 'password'" 
+          formControlName="password" 
+          required 
+          placeholder="Ingresa tu contraseña"
+          autocomplete="current-password"
+        />
+        <button type="button" class="toggle-password" (click)="togglePasswordVisibility()" tabindex="-1">
+          <span class="icon">{{ mostrarPassword ? '👁️' : '👁️‍🗨️' }}</span>
+        </button>
+      </div>
       <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error">
         La contraseña es obligatoria.
       </div>
     </div>
+    
     <button type="submit" [disabled]="loginForm.invalid || cargando">
       <span *ngIf="cargando" class="spinner"></span>
-      Entrar
+      <span *ngIf="!cargando" class="icon">🚀</span>
+      Iniciar sesión
     </button>
-    <div class="error" *ngIf="error">{{ error }}</div>
+    
+    <div class="error" *ngIf="error">
+      <span class="icon">⚠️</span> {{ error }}
+    </div>
   </form>
-  <p>¿No tienes cuenta? <a [routerLink]="['/register']">Regístrate</a></p>
+  
+  <p class="register-link">
+    ¿No tienes cuenta? <a [routerLink]="['/register']">Regístrate ahora</a>
+  </p>
 </div>

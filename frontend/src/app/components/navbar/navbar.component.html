@@ -1,6 +1,9 @@
-<nav class="navbar">
+<nav class="navbar" [class.scrolled]="scrolled">
   <div class="navbar-brand">
-    <a routerLink="/dashboard" class="brand-link">FinanzasApp</a>
+    <a routerLink="/dashboard" class="brand-link">
+      <span class="brand-icon">📊</span>
+      FinanzasApp
+    </a>
 
     <!-- Botón hamburguesa: solo visible en pantallas ≤ 600px -->
     <button 
@@ -15,19 +18,30 @@
       <span class="bar"></span>
     </button>
   </div>
-
-  <!--
-    En pantallas grandes el UL siempre está visible. 
-    En pantallas pequeñas, solo se muestra si menuOpen === true.
-  -->
-  <ul class="navbar-links" [class.open]="menuOpen">    <li><a routerLink="/dashboard" routerLinkActive="active" (click)="menuOpen = false">Dashboard</a></li>
-    <li><a routerLink="/movimientos" routerLinkActive="active" (click)="menuOpen = false">Movimientos</a></li>
-    <li><a routerLink="/categorias" routerLinkActive="active" (click)="menuOpen = false">Categorías</a></li>
-    <li *ngIf="auth.isLoggedIn()">
-      <a (click)="logout(); menuOpen = false" class="logout">Cerrar sesión</a>
+  <ul class="navbar-links" [class.open]="menuOpen">
+    <li>
+      <a routerLink="/dashboard" routerLinkActive="active" (click)="closeMenu()">
+        <span class="nav-icon">📈</span> Dashboard
+      </a>
     </li>
-    <li *ngIf="!auth.isLoggedIn()">
-      <a routerLink="/login" (click)="menuOpen = false">Iniciar sesión</a>
+    <li>
+      <a routerLink="/movimientos" routerLinkActive="active" (click)="closeMenu()">
+        <span class="nav-icon">💸</span> Movimientos
+      </a>
+    </li>
+    <li>
+      <a routerLink="/categorias" routerLinkActive="active" (click)="closeMenu()">
+        <span class="nav-icon">🏷️</span> Categorías
+      </a>
+    </li>
+    <li *ngIf="auth.isLoggedIn()">
+      <a (click)="logout(); closeMenu()" class="logout">
+        <span class="nav-icon">🚪</span> Cerrar sesión
+      </a>
+    </li>    <li *ngIf="!auth.isLoggedIn()">
+      <a routerLink="/login" (click)="closeMenu()">
+        <span class="nav-icon">🔑</span> Iniciar sesión
+      </a>
     </li>
   </ul>
 </nav>

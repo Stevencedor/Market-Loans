@@ -1,8 +1,7 @@
 <div class="dashboard-container">
   <h2>Dashboard Financiero</h2>
-  
-  <!-- Filtro por fechas -->
-  <div class="filtro-fechas">
+    <!-- Filtro por fechas con diseño mejorado -->
+  <div class="filtro-fechas card">
     <h3>Filtrar por período</h3>
     <div class="filtro-form">
       <div class="form-group">
@@ -12,6 +11,7 @@
           id="fechaInicio" 
           [(ngModel)]="fechaInicio" 
           name="fechaInicio"
+          class="form-control"
         >
       </div>
       <div class="form-group">
@@ -21,19 +21,24 @@
           id="fechaFin" 
           [(ngModel)]="fechaFin" 
           name="fechaFin"
+          class="form-control"
         >
       </div>
-      <button class="btn-filtrar" (click)="aplicarFiltroFechas()">Aplicar filtro</button>
+      <button class="btn-filtrar" (click)="aplicarFiltroFechas()">
+        <span class="icon">📅</span> Aplicar filtro
+      </button>
     </div>
   </div>
   
   <!-- Loader y mensajes de error -->
-  <div *ngIf="loading" class="loading-spinner">Cargando datos...</div>
-  <div *ngIf="error" class="error-message">{{ error }}</div>
+  <div *ngIf="loading" class="loading-spinner"></div>
+  <div *ngIf="error" class="error-message">
+    <span class="icon">⚠️</span> {{ error }}
+  </div>
   
   <!-- Resumen de Balance -->
   <div *ngIf="balance && !loading" class="dashboard-section">
-    <h3>Resumen de balance</h3>
+    <h3 class="text-center">Resumen de balance</h3>
     <div class="balance-card">
       <div>
         <span>Total Ingresos:</span>
@@ -44,7 +49,7 @@
         <strong class="gasto">{{ balance.totalGastos | currency:'COP':'symbol':'1.0-0' }}</strong>
       </div>
       <div>
-        <span>Balance:</span>
+        <span>Balance Neto:</span>
         <strong [ngClass]="{'positivo': balance.balance >= 0, 'negativo': balance.balance < 0}">
           {{ balance.balance | currency:'COP':'symbol':'1.0-0' }}
         </strong>
@@ -52,7 +57,17 @@
     </div>
   </div>
   
-  <!-- Gráficos -->
+  <!-- Mensajes de contenido vacío -->
+  <div *ngIf="!loading && (!movimientos || movimientos.length === 0)" class="card text-center">
+    <div class="empty-state">
+      <span class="empty-icon">📊</span>
+      <h3>No hay datos para mostrar</h3>
+      <p class="text-muted">No se encontraron movimientos en el período seleccionado.</p>
+      <button class="btn btn-primary mt-3" routerLink="/movimientos">Registrar movimientos</button>
+    </div>
+  </div>
+  
+  <!-- Gráficos con diseño mejorado -->
   <div *ngIf="!loading && movimientos && movimientos.length > 0" class="dashboard-charts">
     <!-- Gráfico de distribución de gastos por categoría -->
     <div class="chart-container">
@@ -78,36 +93,42 @@
       </canvas>
     </div>
   </div>
-  
-  <!-- Tabla de movimientos recientes -->
+    <!-- Tabla de movimientos recientes -->
   <div *ngIf="!loading && movimientos && movimientos.length > 0" class="dashboard-section">
-    <h3>Movimientos recientes</h3>
-    <table class="movimientos-table">
-      <thead>
-        <tr>
-          <th>Fecha</th>
-          <th>Descripción</th>
-          <th>Categoría</th>
-          <th>Tipo</th>
-          <th>Monto</th>
-        </tr>
-      </thead>
-      <tbody>        <tr *ngFor="let mov of movimientos.slice(0, 5)" [ngClass]="{'ingreso-row': mov.tipo === 'INGRESO', 'gasto-row': mov.tipo === 'GASTO'}">
+    <h3 class="text-center">Movimientos recientes</h3>
+    <div class="movimientos-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Descripción</th>
+            <th>Categoría</th>
+            <th>Tipo</th>
+            <th>Monto</th>
+          </tr>
+        </thead>
+      <tbody>
+        <tr *ngFor="let mov of movimientos.slice(0, 5)" [ngClass]="{'ingreso-row': mov.tipo === 'INGRESO', 'gasto-row': mov.tipo === 'GASTO'}">
           <td>{{ mov.fecha | date:'dd/MM/yyyy' }}</td>
           <td>{{ mov.descripcion }}</td>
           <td>{{ getNombreCategoria(mov.categoriaId) }}</td>
-          <td>{{ mov.tipo }}</td>
+          <td>
+            <span [ngClass]="{'text-income': mov.tipo === 'INGRESO', 'text-expense': mov.tipo === 'GASTO'}">
+              {{ mov.tipo === 'INGRESO' ? '↗️ INGRESO' : '↘️ GASTO' }}
+            </span>
+          </td>
           <td [ngClass]="{'monto-ingreso': mov.tipo === 'INGRESO', 'monto-gasto': mov.tipo === 'GASTO'}">
             {{ mov.monto | currency:'COP':'symbol':'1.0-0' }}
-          </td>
-        </tr>
+          </td>        </tr>
       </tbody>
     </table>
-  </div>
-  
-  <!-- Mensaje si no hay movimientos -->
-  <div *ngIf="!loading && (!movimientos || movimientos.length === 0)" class="empty-state">
-    <p>No hay movimientos para mostrar en el período seleccionado.</p>
-    <button class="btn-primary" [routerLink]="['/movimientos']">Crear un movimiento</button>
+    </div>
+    
+    <!-- Botón para ver más movimientos -->
+    <div class="text-center mt-4">
+      <button class="btn btn-outline" routerLink="/movimientos">
+        Ver todos los movimientos
+      </button>
+    </div>
   </div>
 </div>

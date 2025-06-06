@@ -1,5 +1,5 @@
 <!-- Este es el archivo raíz de la aplicación Angular.
      Elimina cualquier contenido por defecto y deja solo el router outlet. -->
 
-<app-navbar></app-navbar>
+<app-navbar *ngIf="showNavbar()"></app-navbar>
 <router-outlet></router-outlet>

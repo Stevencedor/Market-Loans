@@ -32,14 +32,21 @@ export class DashboardComponent implements OnInit {
   // Filtros de fechas
   fechaInicio: string = format(subMonths(new Date(), 1), 'yyyy-MM-dd');
   fechaFin: string = format(new Date(), 'yyyy-MM-dd');
-  
-  // Gráficos
+    // Gráficos
   public pieChartOptions: ChartConfiguration['options'] = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: true,
-        position: 'right',
+        position: 'bottom',
+        labels: {
+          boxWidth: 12,
+          padding: 15
+        }
+      },
+      tooltip: {
+        enabled: true
       }
     }
   };
@@ -77,20 +84,40 @@ export class DashboardComponent implements OnInit {
     ],
     labels: []
   };
-  
-  public lineChartOptions: ChartConfiguration['options'] = {
+    public lineChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
     elements: {
       line: {
-        tension: 0.5
+        tension: 0.4
+      },
+      point: {
+        radius: 3
       }
     },
     scales: {
       y: {
-        beginAtZero: true
+        beginAtZero: true,
+        ticks: {
+          maxTicksLimit: 5
+        }
+      },
+      x: {
+        ticks: {
+          maxTicksLimit: 6,
+          maxRotation: 0
+        }
       }
     },
     plugins: {
-      legend: { display: true }
+      legend: { 
+        display: true,
+        position: 'top',
+        labels: {
+          boxWidth: 12,
+          usePointStyle: true
+        }
+      }
     }
   };
   

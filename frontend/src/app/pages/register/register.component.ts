@@ -19,6 +19,7 @@ export class RegisterComponent {
   error = '';
   success = '';
   cargando = false;
+  mostrarPassword = false; // Variable para controlar la visibilidad de la contraseña
 
   constructor(
     private api: ApiService,
@@ -33,7 +34,11 @@ export class RegisterComponent {
       email: ['', [Validators.required, Validators.email]]
     });
   }
-
+  // Método para alternar la visibilidad de la contraseña
+  togglePasswordVisibility(): void {
+    this.mostrarPassword = !this.mostrarPassword;
+  }
+  
   register() {
     if (this.registerForm.invalid) return;
     this.cargando = true;

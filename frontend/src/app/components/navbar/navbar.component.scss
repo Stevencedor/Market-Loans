@@ -1,9 +1,9 @@
 // ===============================
 // Variables de color y espacios
-$navbar-bg:          #1976d2;
-$navbar-text:        #fff;
-$navbar-hover:       #125ea2;
-$logout-color:       #ffd600;
+$navbar-bg:          var(--primary-color);
+$navbar-text:        var(--white);
+$navbar-hover:       var(--primary-dark);
+$logout-color:       var(--accent-color);
 
 $max-height-mobile:  0;     // para animar cierre de menú
 $max-height-open:    500px; // valor grande para animar apertura
@@ -15,54 +15,101 @@ $transition-speed:   0.3s;
 .navbar {
   display: flex;
   justify-content: space-between;
-  align-items: center;          // ↣ Importante para centrar verticalmente
-  background:      $navbar-bg;
-  color:           $navbar-text;
-  padding:         0.7rem 2rem;
-  border-radius:   0 0 12px 12px;
-  box-shadow:      0 2px 8px rgba(0,0,0,0.08);
+  align-items: center;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: var(--white);
+  padding: 0.8rem 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  transition: padding 0.3s ease, box-shadow 0.3s ease;
+  
+  // Efecto al hacer scroll
+  &.scrolled {
+    padding: 0.5rem 2rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, darken(#2c6bed, 5%), darken(#6c63ff, 5%));
+  }
 
   // ===========================
-  // Marca (logo/texto) + botón hamburguesa
+  // Marca (logo/texto) + botón hamburguesa  
   .navbar-brand {
-    display:         flex;
-    align-items:     center;     // ↣ Centra verticalmente el contenido
-    justify-content: flex-start; // ocupa solo el espacio del contenido
-
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    
     .brand-link {
-      color:         $navbar-text;
-      font-size:     1.5rem;
-      font-weight:   bold;
+      position: relative;
+      color: var(--white);
+      font-size: 1.5rem;
+      font-weight: 700;
       text-decoration: none;
-      line-height:   1;           // ↣ Evita espacios extra en vertical
+      line-height: 1;
+      letter-spacing: -0.02em;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      
+      .brand-icon {
+        font-size: 1.3rem;
+      }
+      
+      &:hover {
+        transform: translateY(-1px);
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+      
+      &::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 3px;
+        bottom: -5px;
+        left: 0;
+        background-color: var(--accent-color);
+        transition: width 0.3s ease;
+      }
+      
+      &:hover::after {
+        width: 100%;
+      }
     }
 
     // Botón hamburguesa (solo se muestra en móvil)
     .navbar-toggle {
-      display:       none;      // aparecerá en @media
-      background:    transparent;
-      border:        none;
-      cursor:        pointer;
-      padding:       0.3rem;
-      margin-left:   1rem;
+      display: none;      // aparecerá en @media
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0.3rem;
+      margin-left: 1rem;
+      transition: transform 0.3s ease;
 
       // Barras horizontales
       .bar {
-        display:        block;
-        width:          25px;
-        height:         3px;
-        margin:         4px 0;
-        background-color: $navbar-text;
-        border-radius:  2px;
-        transition:     background-color 0.2s;
+        display: block;
+        width: 25px;
+        height: 3px;
+        margin: 5px 0;
+        background-color: var(--white);
+        border-radius: 2px;
+        transition: transform 0.3s ease, opacity 0.3s ease;
       }
 
-      &:hover .bar {
-        background-color: lighten($navbar-text, 20%);
+      &:hover {
+        transform: scale(1.05);
+        
+        .bar {
+          background-color: var(--light);
+        }
       }
 
       &:focus {
-        outline:        none;
+        outline: none;
       }
     }
   }
@@ -70,35 +117,54 @@ $transition-speed:   0.3s;
   // ===========================
   // Lista de enlaces
   .navbar-links {
-    list-style:      none;
-    display:         flex;
-    gap:             1.2rem;
-    margin:          0;
-    padding:         0;
-    align-items:     center;     // ↣ Centra verticalmente cada <li>
-
+    list-style: none;
+    display: flex;
+    gap: 1.2rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    
     li {
+      position: relative;
+      
       a {
-        color:            $navbar-text;
-        text-decoration:  none;
-        font-weight:      500;
-        padding:          0.4rem 0.8rem;
-        border-radius:    4px;
-        transition:       background 0.2s, color 0.2s;
-        line-height:      1;     // ↣ Asegura que el texto esté centrado
-
-        &.active,
-        &:hover {
-          background:     $navbar-hover;
+        color: var(--white);
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.6rem 1rem;
+        border-radius: var(--border-radius-sm);
+        transition: all 0.3s ease;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        
+        .nav-icon {
+          font-size: 1.1rem;
+        }
+        
+        &.active {
+          background: var(--primary-dark);
+          font-weight: 600;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        &:hover:not(.active) {
+          background: rgba(255, 255, 255, 0.15);
+          transform: translateY(-2px);
         }
       }
 
       .logout {
-        color:       $logout-color;
+        display: flex;
+        align-items: center;
+        color: var(--accent-color);
         font-weight: bold;
-
+        cursor: pointer;
+        
         &:hover {
-          text-decoration: underline;
+          background: rgba(255, 255, 255, 0.1);
+          transform: translateY(-2px);
         }
       }
     }
@@ -108,38 +174,71 @@ $transition-speed:   0.3s;
   // Punto de quiebre para pantallas ≤ 600px
   @media (max-width: 600px) {
     flex-direction: column;
-    align-items:    flex-start;   // En mobile, primero brand, luego links
-    padding:        1rem;
+    align-items: flex-start;
+    padding: 1rem;
+    
+    &.scrolled {
+      padding: 0.8rem 1rem;
+    }
 
     .navbar-brand {
-      width:       100%;
+      width: 100%;
       justify-content: space-between;
 
       // Mostrar botón hamburguesa
       .navbar-toggle {
-        display:         block;
+        display: block;
+        
+        &.active {
+          .bar:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 7px);
+          }
+          
+          .bar:nth-child(2) {
+            opacity: 0;
+          }
+          
+          .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -7px);
+          }
+        }
       }
     }
 
     // Menú colapsado por defecto
     .navbar-links {
-      flex-direction:       column;
-      width:                100%;
-      overflow:             hidden;
-      max-height:           $max-height-mobile;
-      transition:           max-height $transition-speed ease-in-out;
+      flex-direction: column;
+      width: 100%;
+      overflow: hidden;
+      max-height: $max-height-mobile;
+      transition: all $transition-speed ease-in-out;
+      opacity: 0;
+      transform: translateY(-10px);
 
       &.open {
-        max-height:         $max-height-open;
+        max-height: $max-height-open;
+        opacity: 1;
+        transform: translateY(0);
+        margin-top: 0.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 0.5rem;
       }
 
       li {
-        width:              100%;
+        width: 100%;
+        margin: 0.2rem 0;
 
         a {
-          display:          block;
-          width:            100%;
-          padding:          0.6rem 1rem;
+          display: flex;
+          width: 100%;
+          padding: 0.8rem 1rem;
+          border-radius: var(--border-radius-sm);
+          transition: background-color 0.2s ease;
+          
+          &:hover, &.active {
+            background: rgba(255, 255, 255, 0.1);
+            transform: none;
+          }
         }
       }
     }

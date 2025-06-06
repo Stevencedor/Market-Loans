@@ -1,32 +1,71 @@
 <div class="categorias-container">
-  <h2>Categorías</h2>
+  <h2>Administración de Categorías</h2>
+  
+  <!-- Formulario para agregar categorías -->
   <form (ngSubmit)="agregarCategoria()">
-    <div>
-      <label>Nombre</label>
-      <input [(ngModel)]="nueva.nombre" name="nombre" required />
+    <div class="form-group">
+      <label for="nombre">Nombre de categoría</label>
+      <input 
+        id="nombre"
+        [(ngModel)]="nueva.nombre" 
+        name="nombre" 
+        required 
+        placeholder="Ej. Alimentación, Transporte, Salario"
+      />
     </div>
-    <div>
-      <label>Descripción</label>
-      <input [(ngModel)]="nueva.descripcion" name="descripcion" />
+    
+    <div class="form-group">
+      <label for="descripcion">Descripción (opcional)</label>
+      <input 
+        id="descripcion"
+        [(ngModel)]="nueva.descripcion" 
+        name="descripcion"
+        placeholder="Breve descripción de la categoría"
+      />
     </div>
-    <button type="submit">Agregar</button>
-    <div class="success" *ngIf="success">{{ success }}</div>
-    <div class="error" *ngIf="error">{{ error }}</div>
+    
+    <button type="submit">Agregar categoría</button>
+    
+    <div class="success" *ngIf="success">✅ {{ success }}</div>
+    <div class="error" *ngIf="error">❌ {{ error }}</div>
   </form>
-  <div *ngIf="loading">Cargando categorías...</div>
-  <table *ngIf="!loading && categorias.length > 0">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Descripción</th>
-      </tr>
-    </thead>
+  
+  <div class="section-header">
+    <h3>Categorías existentes</h3>
+  </div>
+  
+  <!-- Estado de carga -->
+  <div *ngIf="loading" class="loading">
+    Cargando categorías...
+  </div>
+    <!-- Tabla de categorías -->
+  <div class="table-responsive" *ngIf="!loading && categorias.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
     <tbody>
       <tr *ngFor="let cat of categorias">
-        <td>{{ cat.nombre }}</td>
-        <td>{{ cat.descripcion }}</td>
-      </tr>
+        <td>
+          <span class="categoria-icon">🏷️</span>
+          {{ cat.nombre }}
+        </td>
+        <td>{{ cat.descripcion || 'Sin descripción' }}</td>
+        <td class="actions">
+          <button class="btn-edit" title="Editar categoría">✏️</button>
+          <button class="btn-delete" title="Eliminar categoría">🗑️</button>
+        </td>      </tr>
     </tbody>
-  </table>
-  <div *ngIf="!loading && categorias.length === 0" class="info">No hay categorías registradas.</div>
+    </table>
+  </div>
+  
+  <!-- Mensaje cuando no hay categorías -->
+  <div *ngIf="!loading && categorias.length === 0" class="info">
+    No hay categorías registradas. 
+    <p>Crea una categoría para organizar mejor tus finanzas.</p>
+  </div>
 </div>

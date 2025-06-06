@@ -18,6 +18,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   error = '';
   cargando = false;
+  mostrarPassword = false; // Variable para controlar la visibilidad de la contraseña
 
   constructor(
     private api: ApiService,
@@ -30,7 +31,11 @@ export class LoginComponent {
       password: ['', Validators.required]
     });
   }
-
+  // Método para alternar la visibilidad de la contraseña
+  togglePasswordVisibility(): void {
+    this.mostrarPassword = !this.mostrarPassword;
+  }
+  
   login() {
     if (this.loginForm.invalid) return;
     this.cargando = true;

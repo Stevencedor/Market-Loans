@@ -1,64 +1,97 @@
 <div class="movimientos-container">
-  <h2>Movimientos</h2>
+  <h2>Gestionar Movimientos</h2>
+  
+  <!-- Formulario para agregar movimientos -->
   <form [formGroup]="movimientoForm" (ngSubmit)="agregarMovimiento()">
-    <div>
-      <label>Monto</label>
-      <input type="number" formControlName="monto" required />
+    <div class="form-group">
+      <label for="monto">Monto</label>
+      <input type="number" id="monto" formControlName="monto" required placeholder="0.00" />
       <div *ngIf="movimientoForm.get('monto')?.invalid && movimientoForm.get('monto')?.touched" class="error">
         El monto es obligatorio y debe ser mayor a 0.
       </div>
     </div>
-    <div>
-      <label>Tipo</label>
-      <select formControlName="tipo">
-        <option value="INGRESO">Ingreso</option>
-        <option value="GASTO">Gasto</option>
+    
+    <div class="form-group">
+      <label for="tipo">Tipo de movimiento</label>
+      <select id="tipo" formControlName="tipo">
+        <option value="">-- Seleccionar tipo --</option>
+        <option value="INGRESO">💹 Ingreso</option>
+        <option value="GASTO">📉 Gasto</option>
       </select>
       <div *ngIf="movimientoForm.get('tipo')?.invalid && movimientoForm.get('tipo')?.touched" class="error">
         El tipo es obligatorio.
       </div>
     </div>
-    <div>
-      <label>Descripción</label>
-      <input formControlName="descripcion" required />
+    
+    <div class="form-group">
+      <label for="descripcion">Descripción</label>
+      <input id="descripcion" formControlName="descripcion" required placeholder="Ej. Compra de supermercado" />
       <div *ngIf="movimientoForm.get('descripcion')?.invalid && movimientoForm.get('descripcion')?.touched" class="error">
         La descripción es obligatoria.
       </div>
     </div>
-    <div>
-      <label>Categoría</label>
-      <select formControlName="categoria">
+    
+    <div class="form-group">
+      <label for="categoria">Categoría</label>
+      <select id="categoria" formControlName="categoria">
+        <option value="">-- Seleccionar categoría --</option>
         <option *ngFor="let cat of categorias" [ngValue]="cat">{{ cat.nombre }}</option>
       </select>
       <div *ngIf="movimientoForm.get('categoria')?.invalid && movimientoForm.get('categoria')?.touched" class="error">
         La categoría es obligatoria.
       </div>
     </div>
+    
     <button type="submit" [disabled]="movimientoForm.invalid || cargando">
       <span *ngIf="cargando" class="spinner"></span>
-      Agregar
+      Registrar movimiento
     </button>
-    <div class="success" *ngIf="success">{{ success }}</div>
-    <div class="error" *ngIf="error">{{ error }}</div>
+    
+    <div class="success" *ngIf="success">✅ {{ success }}</div>
+    <div class="error" *ngIf="error">❌ {{ error }}</div>
   </form>
-  <div *ngIf="loading">Cargando movimientos...</div>
-  <table *ngIf="!loading && movimientos.length > 0">
-    <thead>
-      <tr>
-        <th>Monto</th>
-        <th>Tipo</th>
-        <th>Descripción</th>
-        <th>Categoría</th>
-      </tr>
-    </thead>
+  
+  <!-- Sección de movimientos -->
+  <div class="section-header">
+    <h3>Movimientos registrados</h3>
+  </div>
+  
+  <!-- Estado de carga -->
+  <div *ngIf="loading" class="loading-indicator">
+    <div class="spinner spinner-dark"></div>
+    <p>Cargando movimientos...</p>
+  </div>
+    <!-- Tabla de movimientos -->
+  <div class="table-responsive" *ngIf="!loading && movimientos.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Monto</th>
+          <th>Tipo</th>
+          <th>Descripción</th>
+          <th>Categoría</th>
+        </tr>
+      </thead>
     <tbody>
-      <tr *ngFor="let mov of movimientos">
-        <td>{{ mov.monto }}</td>
-        <td>{{ mov.tipo }}</td>
+      <tr *ngFor="let mov of movimientos" [ngClass]="{'ingreso-row': mov.tipo === 'INGRESO', 'gasto-row': mov.tipo === 'GASTO'}">
+        <td>{{ mov.fecha | date:'dd/MM/yyyy' }}</td>
+        <td [ngClass]="{'text-income': mov.tipo === 'INGRESO', 'text-expense': mov.tipo === 'GASTO'}">
+          {{ mov.monto | currency:'COP':'symbol':'1.0-0' }}
+        </td>
+        <td>
+          <span class="badge" [ngClass]="{'badge-income': mov.tipo === 'INGRESO', 'badge-expense': mov.tipo === 'GASTO'}">
+            {{ mov.tipo === 'INGRESO' ? '↗️ Ingreso' : '↘️ Gasto' }}
+          </span>
+        </td>
         <td>{{ mov.descripcion }}</td>
-        <td>{{ mov.categoria?.nombre }}</td>
-      </tr>
+        <td>{{ mov.categoria?.nombre }}</td>      </tr>
     </tbody>
   </table>
-  <div *ngIf="!loading && movimientos.length === 0" class="info">No hay movimientos registrados.</div>
+  </div>
+  
+  <!-- Mensaje cuando no hay movimientos -->
+  <div *ngIf="!loading && movimientos.length === 0" class="info">
+    No hay movimientos registrados.
+  </div>
 </div>
