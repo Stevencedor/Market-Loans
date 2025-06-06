@@ -1,0 +1,23 @@
+{
+  "properties": [
+    {
+      "name": "jwt.secret",
+      "type": "java.lang.String",
+      "description": "Clave secreta para la firma de JWT.",
+      "defaultValue": "mi_clave_secreta_para_jwt_muy_larga_y_segura_1234567890_abcdef_1234567890_abcdef"
+    },
+    {
+      "name": "jwt.expiration",
+      "type": "java.lang.Long",
+      "description": "Tiempo de expiración del JWT en milisegundos.",
+      "defaultValue": 86400000
+    }
+  ],
+  "groups": [
+    {
+      "name": "jwt",
+      "type": "com.finanzas.config.JwtProperties",
+      "sourceType": "com.finanzas.config.JwtProperties"
+    }
+  ]
+}
