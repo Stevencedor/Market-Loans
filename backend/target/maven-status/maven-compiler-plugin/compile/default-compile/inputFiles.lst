@@ -5,7 +5,7 @@ D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\controller\CategoriaController.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\controller\HealthController.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\controller\MovimientoController.java
-D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\controller\ReporteController.java
+D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\controller\ReportesController.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\controller\UserController.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\dto\ErrorResponse.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\exception\CategoriaEnUsoException.java
@@ -22,4 +22,5 @@ D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\service\CategoriaService.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\service\CustomUserDetailsService.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\service\JwtService.java
+D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\service\ReportesService.java
 D:\Documents\La Salle\6. SEMESTRE\CONSTRUCCION DE SOFTWARE\ProyectoFinal\backend\src\main\java\com\finanzas\service\UsuarioService.java

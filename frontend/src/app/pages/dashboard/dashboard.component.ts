@@ -143,37 +143,47 @@ export class DashboardComponent implements OnInit {
         next: (cats) => {
           this.categorias = cats;
           
-          // Obtener movimientos con filtro de fechas
+          // Obtener movimientos y balance CON FILTRO DE FECHAS
           this.api.getMovimientosPorFecha(token, this.fechaInicio, this.fechaFin).subscribe({
             next: (movs: any[]) => {
-              this.movimientos = movs;
-              if (!this.movimientos || this.movimientos.length === 0) {
-                this.error = 'No hay movimientos en el período seleccionado';
-                this.loading = false;
-              } else {
-                // Si hay movimientos, obtener el balance/resumen
-                this.api.getBalance(token).subscribe({
-                  next: (res) => {
-                    this.balance = res;
-                    this.loading = false;
-                    this.generarGraficoPorCategoria();
-                    this.generarGraficoTendencias();
-                  },
-                  error: () => {
-                    this.error = 'No se pudo cargar el balance';
-                    this.loading = false;
+              this.movimientos = movs; // Estos movimientos ya están filtrados por fecha desde el backend
+              
+              // Obtener el balance CON FILTRO DE FECHAS
+              this.api.getBalanceConFiltro(this.fechaInicio, this.fechaFin, token).subscribe({
+                next: (res) => {
+                  this.balance = res; // Este balance ya está calculado con el rango de fechas
+                  // this.movimientos = res.movimientos; // Si el backend devuelve los movimientos filtrados junto con el balance
+                  this.loading = false;
+                  if (!this.movimientos || this.movimientos.length === 0) {
+                    this.error = 'No hay movimientos en el período seleccionado';
+                  } else {
+                    this.error = ''; // Limpiar error si hay movimientos
                   }
-                });
-              }
+                  this.generarGraficoPorCategoria(); // Usará this.movimientos (ya filtrados)
+                  this.generarGraficoTendencias();   // Usará this.movimientos (ya filtrados)
+                },
+                error: (err) => {
+                  this.error = 'No se pudo cargar el balance para el período seleccionado. ' + (err.error?.message || '');
+                  this.loading = false;
+                  this.balance = null; // Limpiar balance anterior
+                  this.movimientos = []; // Limpiar movimientos anteriores
+                  this.generarGraficoPorCategoria(); // Actualizar gráficos con datos vacíos
+                  this.generarGraficoTendencias();
+                }
+              });
             },
-            error: () => {
-              this.error = 'No se pudo cargar la información de movimientos';
+            error: (err) => {
+              this.error = 'No se pudo cargar la información de movimientos para el período seleccionado. ' + (err.error?.message || '');
               this.loading = false;
+              this.movimientos = []; // Limpiar movimientos
+              this.balance = null; // Limpiar balance
+              this.generarGraficoPorCategoria();
+              this.generarGraficoTendencias();
             }
           });
         },
-        error: () => {
-          this.error = 'No se pudo cargar la información de categorías';
+        error: (err) => {
+          this.error = 'No se pudo cargar la información de categorías. ' + (err.error?.message || '');
           this.loading = false;
         }
       });
@@ -186,22 +196,23 @@ export class DashboardComponent implements OnInit {
   }
   
   // Método auxiliar para buscar nombres de categorías
-  getNombreCategoria(categoriaId: number): string {
-    const categoria = this.categorias.find(cat => cat.id === categoriaId);
-    return categoria ? categoria.nombre : 'Sin categoría';
-  }
+  // getNombreCategoria(categoriaId: number): string { // Comentado o eliminado ya que no se usa directamente en la plantilla
+  //   const categoria = this.categorias.find(cat => cat.id === categoriaId);
+  //   return categoria ? categoria.nombre : 'Sin categoría';
+  // }
   
   // Generar gráfico de distribución por categorías
   generarGraficoPorCategoria() {
-    const categoriaMap = new Map();
+    const categoriaMap = new Map<string, number>();
     
     // Agrupar gastos por categoría
     this.movimientos.forEach(mov => {
       if (mov.tipo === 'GASTO') {
-        const nombreCategoria = this.categorias.find(cat => cat.id === mov.categoriaId)?.nombre || 'Sin categoría';
+        // Usar el objeto categoria directamente si está disponible, o buscarlo si solo hay categoriaId
+        const nombreCategoria = mov.categoria?.nombre || this.categorias.find(cat => cat.id === mov.categoriaId)?.nombre || 'Sin categoría';
         
         if (categoriaMap.has(nombreCategoria)) {
-          categoriaMap.set(nombreCategoria, categoriaMap.get(nombreCategoria) + mov.monto);
+          categoriaMap.set(nombreCategoria, (categoriaMap.get(nombreCategoria) as number) + mov.monto);
         } else {
           categoriaMap.set(nombreCategoria, mov.monto);
         }

@@ -4,13 +4,13 @@
   <!-- Formulario para agregar movimientos -->
   <form [formGroup]="movimientoForm" (ngSubmit)="agregarMovimiento()">
     <div class="form-group">
-      <label for="monto">Monto</label>
-      <input type="number" id="monto" formControlName="monto" required placeholder="0.00" />
-      <div *ngIf="movimientoForm.get('monto')?.invalid && movimientoForm.get('monto')?.touched" class="error">
-        El monto es obligatorio y debe ser mayor a 0.
+      <label for="fecha">Fecha</label>
+      <input type="datetime-local" id="fecha" formControlName="fecha" required />
+      <div *ngIf="movimientoForm.get('fecha')?.invalid && movimientoForm.get('fecha')?.touched" class="error">
+        La fecha es obligatoria.
       </div>
     </div>
-    
+
     <div class="form-group">
       <label for="tipo">Tipo de movimiento</label>
       <select id="tipo" formControlName="tipo">
@@ -20,6 +20,14 @@
       </select>
       <div *ngIf="movimientoForm.get('tipo')?.invalid && movimientoForm.get('tipo')?.touched" class="error">
         El tipo es obligatorio.
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="monto">Monto</label>
+      <input type="number" id="monto" formControlName="monto" required placeholder="0.00" />
+      <div *ngIf="movimientoForm.get('monto')?.invalid && movimientoForm.get('monto')?.touched" class="error">
+        El monto es obligatorio y debe ser mayor a 0.
       </div>
     </div>
     

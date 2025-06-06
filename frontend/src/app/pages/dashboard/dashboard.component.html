@@ -111,7 +111,7 @@
         <tr *ngFor="let mov of movimientos.slice(0, 5)" [ngClass]="{'ingreso-row': mov.tipo === 'INGRESO', 'gasto-row': mov.tipo === 'GASTO'}">
           <td>{{ mov.fecha | date:'dd/MM/yyyy' }}</td>
           <td>{{ mov.descripcion }}</td>
-          <td>{{ getNombreCategoria(mov.categoriaId) }}</td>
+          <td>{{ mov.categoria?.nombre || 'Sin categoría' }}</td>
           <td>
             <span [ngClass]="{'text-income': mov.tipo === 'INGRESO', 'text-expense': mov.tipo === 'GASTO'}">
               {{ mov.tipo === 'INGRESO' ? '↗️ INGRESO' : '↘️ GASTO' }}

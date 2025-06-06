@@ -22,14 +22,15 @@ public class MovimientoController {
     private UsuarioRepository usuarioRepository;
 
     @GetMapping
-    public List<Movimiento> listarMovimientos(@RequestParam(required = false) String username) {
-        if (username != null) {
-            Usuario usuario = usuarioRepository.findByUsername(username).orElse(null);
-            if (usuario != null) {
-                return movimientoRepository.findByUsuario(usuario);
-            }
+    public List<Movimiento> listarMovimientos(Principal principal) { // Modificado para usar Principal
+        if (principal != null) {
+            Usuario usuario = usuarioRepository.findByUsername(principal.getName())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + principal.getName()));
+            return movimientoRepository.findByUsuario(usuario);
         }
-        return movimientoRepository.findAll();
+        // Considerar qué devolver si no hay principal. Podría ser una lista vacía o un error.
+        // Por ahora, devolvemos una lista vacía si no hay un usuario autenticado.
+        return List.of(); 
     }
 
     @PostMapping

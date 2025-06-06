@@ -29,6 +29,7 @@ export class MovimientosComponent implements OnInit {
       monto: [0, [Validators.required, Validators.min(1)]],
       tipo: ['INGRESO', Validators.required],
       descripcion: ['', Validators.required],
+      fecha: [new Date().toISOString().substring(0, 16), Validators.required], // Agregar control de fecha
       categoria: [null, Validators.required]
     });
   }
@@ -70,11 +71,21 @@ export class MovimientosComponent implements OnInit {
     const token = this.auth.getToken();
     if (token) {
       this.cargando = true;
-      this.api.addMovimiento(this.movimientoForm.value, token).subscribe({
+      // Convertir la fecha al formato ISO adecuado antes de enviar
+      const formValue = { ...this.movimientoForm.value };
+      formValue.fecha = new Date(formValue.fecha).toISOString();
+
+      this.api.addMovimiento(formValue, token).subscribe({
         next: (res) => {
           this.success = 'Movimiento agregado';
           this.error = '';
-          this.movimientoForm.reset({ monto: 0, tipo: 'INGRESO', descripcion: '', categoria: null });
+          this.movimientoForm.reset({ 
+            monto: 0, 
+            tipo: 'INGRESO', 
+            descripcion: '', 
+            fecha: new Date().toISOString().substring(0, 16), // Resetear fecha
+            categoria: null 
+          });
           this.cargarMovimientos();
           this.cargando = false;
         },

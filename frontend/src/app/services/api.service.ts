@@ -74,8 +74,21 @@ export class ApiService {
 
   getBalance(tokenAntiguo?: string): Observable<any> { // tokenAntiguo es opcional y no se usará
     const token = this.authService.getToken();
-    return this.http.get(`${this.baseUrl}/reportes/balance`, {
+    // Este método se mantiene por si se necesita un balance general sin filtro de fecha en algún otro lugar.
+    // O puede ser deprecado/eliminado si getBalanceConFiltro cubre todos los casos de uso.
+    return this.http.get(`${this.baseUrl}/reportes/balance`, { // Asumiendo que este endpoint ahora podría tomar fechas o no.
       headers: new HttpHeaders({ Authorization: `Bearer ${token}` })
+    });
+  }
+
+  getBalanceConFiltro(fechaInicio: string, fechaFin: string, tokenAntiguo?: string): Observable<any> {
+    const token = this.authService.getToken();
+    return this.http.get(`${this.baseUrl}/reportes/balance`, { // Llama al mismo endpoint, pero con parámetros de fecha
+      headers: new HttpHeaders({ Authorization: `Bearer ${token}` }),
+      params: {
+        fechaInicio: fechaInicio,
+        fechaFin: fechaFin
+      }
     });
   }
 
